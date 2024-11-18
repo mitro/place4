@@ -1,22 +1,41 @@
-﻿using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
+var builder = WebApplication.CreateBuilder(args);
 
-using var cts = new CancellationTokenSource();
-var bot = new TelegramBotClient("YOUR_BOT_TOKEN", cancellationToken: cts.Token);
-var me = await bot.GetMe();
-bot.OnMessage += OnMessage;
+// Add services to the container.
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
 
-Console.WriteLine($"@{me.Username} is running... Press Enter to terminate");
-Console.ReadLine();
-cts.Cancel();
+var app = builder.Build();
 
-async Task OnMessage(Message msg, UpdateType type)
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    if (msg.Text is null)
+    app.MapOpenApi();
+}
+
+app.UseHttpsRedirection();
+
+var summaries = new[]
+{
+    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+};
+
+app.MapGet("/weatherforecast", () =>
     {
-        return;
-    }
-    Console.WriteLine($"Received {type} '{msg.Text}' in {msg.Chat}");
-    await bot.SendMessage(msg.Chat, $"{msg.From} said: {msg.Text}");
+        var forecast = Enumerable.Range(1, 5).Select(index =>
+                new WeatherForecast
+                (
+                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                    Random.Shared.Next(-20, 55),
+                    summaries[Random.Shared.Next(summaries.Length)]
+                ))
+            .ToArray();
+        return forecast;
+    })
+    .WithName("GetWeatherForecast");
+
+app.Run();
+
+record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+{
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }

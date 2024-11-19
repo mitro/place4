@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place3.TelegramBot", "Place3.TelegramBot\Place3.TelegramBot.csproj", "{8CC6909E-F699-4318-B921-12E87B7D3180}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place4.TelegramBot", "Place4.TelegramBot\Place4.TelegramBot.csproj", "{8CC6909E-F699-4318-B921-12E87B7D3180}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place3.AppHost", "Place3.AppHost\Place3.AppHost.csproj", "{E69CDF15-2CAF-49CF-AAB8-9D8B6CBEF332}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place4.AppHost", "Place4.AppHost\Place4.AppHost.csproj", "{E69CDF15-2CAF-49CF-AAB8-9D8B6CBEF332}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place3.ServiceDefaults", "Place3.ServiceDefaults\Place3.ServiceDefaults.csproj", "{EEF046CF-366A-4614-B456-5282CA07509C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place4.ServiceDefaults", "Place4.ServiceDefaults\Place4.ServiceDefaults.csproj", "{EEF046CF-366A-4614-B456-5282CA07509C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

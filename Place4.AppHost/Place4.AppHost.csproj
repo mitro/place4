@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0"/>
+    <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -12,7 +12,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0"/>
+        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Place4.ServiceDefaults\Place4.ServiceDefaults.csproj" />
+      <ProjectReference Include="..\Place4.TelegramBot\Place4.TelegramBot.csproj" />
     </ItemGroup>
 
 </Project>

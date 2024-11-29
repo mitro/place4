@@ -1,0 +1,58 @@
+name: Test, Build, Push, and Run Docker Container from Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['9.0.x']
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    
+    - name: Test
+      run: dotnet test --verbosity quiet
+
+  build_push_and_run:
+    name: Build, Push, and Run Docker Container
+    runs-on: ["self-hosted"]
+    needs: test
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/telegram-bot:main -f Place4.TelegramBot/Dockerfile .
+
+      - name: Push Docker Image to GitHub Container Registry
+        run: |
+          docker push ghcr.io/${{ github.repository }}/telegram-bot:main
+
+      - name: Run Docker Container
+        run: |
+          docker stop place4-telegram-bot-main || true && docker rm place4-telegram-bot-main || true && docker run -d --restart always --name place4-telegram-bot-main ghcr.io/${{ github.repository }}/telegram-bot:main

@@ -25,6 +25,9 @@ jobs:
   build_push_and_run:
     name: Build, Push, and Run Docker Container
     runs-on: ["self-hosted"]
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout code

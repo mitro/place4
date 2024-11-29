@@ -6,7 +6,7 @@ namespace Place4.TelegramBot.UpdateHandlers
 
     public class ParrotUpdateHandler(ILogger<ParrotUpdateHandler> logger) : ITelegramUpdateHandler
     {
-        public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        public async Task HandleUpdateAsync(ITelegramBotClient telegramBotClient, Update update, CancellationToken cancellationToken)
         {
             if (update.Type != UpdateType.Message || update.Message?.From == null)
             {
@@ -14,7 +14,7 @@ namespace Place4.TelegramBot.UpdateHandlers
             }
             var chatId = update.Message.Chat.Id;
             var message = $"Hi, [{update.Message.From.FirstName} {update.Message.From.LastName}](tg://user?id={update.Message.From.Id}). You said: {update.Message.Text}";
-            await botClient.SendMessage(
+            await telegramBotClient.SendMessage(
                 chatId, 
                 message, 
                 cancellationToken: cancellationToken,

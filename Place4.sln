@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place4.AppHost", "Place4.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place4.ServiceDefaults", "Place4.ServiceDefaults\Place4.ServiceDefaults.csproj", "{EEF046CF-366A-4614-B456-5282CA07509C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Place4.TelegramBot.Tests", "Place4.TelegramBot.Tests\Place4.TelegramBot.Tests.csproj", "{E89209BA-9F0C-4AA8-8A07-A53972A8233E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{EEF046CF-366A-4614-B456-5282CA07509C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEF046CF-366A-4614-B456-5282CA07509C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEF046CF-366A-4614-B456-5282CA07509C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E89209BA-9F0C-4AA8-8A07-A53972A8233E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E89209BA-9F0C-4AA8-8A07-A53972A8233E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E89209BA-9F0C-4AA8-8A07-A53972A8233E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E89209BA-9F0C-4AA8-8A07-A53972A8233E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

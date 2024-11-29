@@ -5,6 +5,6 @@ namespace Place4.TelegramBot.UpdateHandlers
 
     public interface ITelegramUpdateHandler
     {
-        Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken);
+        Task HandleUpdateAsync(ITelegramBotClient telegramBotClient, Update update, CancellationToken cancellationToken);
     }
 }

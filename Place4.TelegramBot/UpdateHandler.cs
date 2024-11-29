@@ -1,31 +1,30 @@
-namespace Place4.TelegramBot
-{
-    using Telegram.Bot;
-    using Telegram.Bot.Polling;
-    using Telegram.Bot.Types;
-    using UpdateHandlers;
+namespace Place4.TelegramBot;
 
-    public class UpdateHandler(IEnumerable<ITelegramUpdateHandler> updateHandlers, ILogger<UpdateHandler> logger) : IUpdateHandler
+using Telegram.Bot;
+using Telegram.Bot.Polling;
+using Telegram.Bot.Types;
+using UpdateHandlers;
+
+public class UpdateHandler(IEnumerable<ITelegramUpdateHandler> updateHandlers, ILogger<UpdateHandler> logger) : IUpdateHandler
+{
+    public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
-        public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        foreach (var updateHandler in updateHandlers)
         {
-            foreach (var updateHandler in updateHandlers)
+            try
             {
-                try
-                {
-                    await updateHandler.HandleUpdateAsync(botClient, update, cancellationToken);
-                }
-                catch (Exception ex)
-                {
-                    await this.HandleErrorAsync(botClient, ex, HandleErrorSource.HandleUpdateError, cancellationToken);
-                }
+                await updateHandler.HandleUpdateAsync(botClient, update, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                await HandleErrorAsync(botClient, ex, HandleErrorSource.HandleUpdateError, cancellationToken);
             }
         }
+    }
 
-        public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, HandleErrorSource source, CancellationToken cancellationToken)
-        {
-            logger.LogError(exception, "Error occured in {Source}", source);
-            return Task.CompletedTask;
-        }
+    public Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, HandleErrorSource source, CancellationToken cancellationToken)
+    {
+        logger.LogError(exception, "Error occured in {Source}", source);
+        return Task.CompletedTask;
     }
 }

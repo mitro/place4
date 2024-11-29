@@ -1,35 +1,34 @@
-namespace Place4.TelegramBot.Logging
+namespace Place4.TelegramBot.Logging;
+
+using System.Collections.Concurrent;
+using Microsoft.Extensions.Options;
+using Telegram.Bot;
+
+public class TelegramLoggerProvider : ILoggerProvider
 {
-    using System.Collections.Concurrent;
-    using Microsoft.Extensions.Options;
-    using Telegram.Bot;
+    private readonly ITelegramBotClient _telegramBotClient;
+    private readonly IDisposable? _onChangeToken;
+    private BotConfiguration _currentConfig;
+    private readonly ConcurrentDictionary<string, TelegramLogger> _loggers =
+        new(StringComparer.OrdinalIgnoreCase);
 
-    public class TelegramLoggerProvider : ILoggerProvider
+    public TelegramLoggerProvider(
+        IOptionsMonitor<BotConfiguration> config,
+        ITelegramBotClient telegramBotClient)
     {
-        private readonly ITelegramBotClient _telegramBotClient;
-        private readonly IDisposable? _onChangeToken;
-        private BotConfiguration _currentConfig;
-        private readonly ConcurrentDictionary<string, TelegramLogger> _loggers =
-            new(StringComparer.OrdinalIgnoreCase);
+        _telegramBotClient = telegramBotClient;
+        _currentConfig = config.CurrentValue;
+        _onChangeToken = config.OnChange(updatedConfig => _currentConfig = updatedConfig);
+    }
 
-        public TelegramLoggerProvider(
-            IOptionsMonitor<BotConfiguration> config,
-            ITelegramBotClient telegramBotClient)
-        {
-            this._telegramBotClient = telegramBotClient;
-            this._currentConfig = config.CurrentValue;
-            this._onChangeToken = config.OnChange(updatedConfig => this._currentConfig = updatedConfig);
-        }
+    public ILogger CreateLogger(string categoryName) =>
+        _loggers.GetOrAdd(categoryName, name => new TelegramLogger(name, _telegramBotClient, GetCurrentConfig()));
 
-        public ILogger CreateLogger(string categoryName) =>
-            this._loggers.GetOrAdd(categoryName, name => new TelegramLogger(name, this._telegramBotClient, this.GetCurrentConfig()));
+    private BotConfiguration GetCurrentConfig() => _currentConfig;
 
-        private BotConfiguration GetCurrentConfig() => this._currentConfig;
-
-        public void Dispose()
-        {
-            this._loggers.Clear();
-            this._onChangeToken?.Dispose();
-        }
+    public void Dispose()
+    {
+        _loggers.Clear();
+        _onChangeToken?.Dispose();
     }
 }

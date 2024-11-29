@@ -3,10 +3,11 @@ name: Test, Build, Push, and Run Docker Container from Main
 on:
   push:
     branches:
-      - feat/deploy-from-main
+      - main
 
 jobs:
   test:
+    name: Test
     runs-on: ubuntu-latest
     strategy:
       matrix:

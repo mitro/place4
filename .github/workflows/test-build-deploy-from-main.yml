@@ -54,4 +54,4 @@ jobs:
 
       - name: Run Docker Container
         run: |
-          docker stop place4-telegram-bot-main || true && docker rm place4-telegram-bot-main || true && docker run -d --name place4-telegram-bot-main ghcr.io/${{ github.repository }}/telegram-bot:main
+          docker stop place4-telegram-bot-main || true && docker rm place4-telegram-bot-main || true && docker run -d --restart always --name place4-telegram-bot-main ghcr.io/${{ github.repository }}/telegram-bot:main

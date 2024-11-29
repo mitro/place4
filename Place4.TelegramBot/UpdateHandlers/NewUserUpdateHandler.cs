@@ -4,7 +4,7 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
-public class NewUserUpdateHandler(ILogger<NewUserUpdateHandler> logger) : ITelegramUpdateHandler
+public class NewUserUpdateHandler : ITelegramUpdateHandler
 {
     public async Task HandleUpdateAsync(ITelegramBotClient telegramBotClient, Update update, CancellationToken cancellationToken)
     {
@@ -17,12 +17,12 @@ public class NewUserUpdateHandler(ILogger<NewUserUpdateHandler> logger) : ITeleg
         var chatId = newUserUpdate.chat.Id;
         var message = $"Welcome, [{newUserUpdate.user.FirstName} {newUserUpdate.user.LastName}](tg://user?id={newUserUpdate.user.Id})";
         await telegramBotClient.SendMessage(
-            chatId, 
-            message, 
+            chatId,
+            message,
             cancellationToken: cancellationToken,
             parseMode: ParseMode.Markdown);
     }
-        
+
     private static (Chat? chat, User? user) IsNewUserUpdate(Update update)
     {
         var isFakeNewMember = update is { Type: UpdateType.Message, Message.Text: "I am new" }; // for test only

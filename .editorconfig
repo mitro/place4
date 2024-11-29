@@ -1,0 +1,27 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Microsoft .NET properties
+csharp_preferred_modifier_order = public, private, protected, internal, file, new, static, abstract, virtual, sealed, readonly, override, extern, unsafe, volatile, async, required:suggestion
+dotnet_style_qualification_for_event = false:warning
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_property = false:warning
+
+csharp_style_namespace_declarations = file_scoped:warning
+
+# ReSharper properties
+resharper_namespace_body = file_scoped
+
+[*.cs]
+charset = utf-8-bom
+indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = false

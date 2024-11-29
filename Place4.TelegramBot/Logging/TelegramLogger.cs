@@ -10,7 +10,7 @@ public class TelegramLogger(string name, ITelegramBotClient telegramBotClient, B
     {
         return logLevel > LogLevel.Information;
     }
-        
+
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         if (!IsEnabled(logLevel))
